@@ -25,7 +25,7 @@
     "build": "npx nest build",
     "postbuild": "cp -r src/i18n dist/src/",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "cross-env PORT=3001 nest start",
+    "start": "nest start",
     "start:dev": "cross-env PORT=3001 nest start --watch",
     "start:swc": "cross-env PORT=3001 nest start -b swc -w",
     "start:debug": "cross-env PORT=3001 nest start --debug --watch",
