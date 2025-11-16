@@ -23,6 +23,7 @@ async function bootstrap() {
 		origin: [
 		configService.getOrThrow('app.frontendDomain', { infer: true }),
 		'http://localhost:3000',
+		'https://frontend-webdev-inky.vercel.app',
 		],
 		credentials: true,
 	});
