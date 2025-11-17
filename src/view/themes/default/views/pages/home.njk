@@ -1,0 +1,232 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!-- Admin Access Notification Popup (Client-side) -->
+<script>
+  // Check URL query parameters for admin_only error
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('error') === 'admin_only') {
+    alert('Access Denied!\n\nAdmin page only. You do not have permission to access this page.');
+    // Clean up URL and redirect to home
+    window.history.replaceState({}, document.title, '/');
+  }
+</script>
+
+<!-- Hero Section -->
+<section class="pt-20 pb-20">
+    <div class="container mx-auto px-8 text-center">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6">{{ heroTitle or 'Profit from Markets <br> with Pro Traders' }}</h1>
+        <p class="text-xl mb-8">{{ heroSubtitle or 'Get Trade Alerts, Daily Analysis, and Educational Guides.' }}</p>
+        <p class="text-green-500 text-lg mb-8">{{ heroDescription or 'Direct access to Expert traders with a proven track record ↗' }}</p>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+            <a href="/pricing" class="bg-green-500 text-white px-8 py-3 rounded-full text-lg hover:bg-green-600 transition duration-300">{{ ctaText or 'Join Now' }}</a>
+
+            {% if user %}
+                <a href="/logout" class="bg-red-500 text-white px-8 py-3 rounded-full text-lg hover:bg-red-600 transition duration-300">Logout ({{ user.email }})</a>
+            {% else %}
+                <a href="/login" class="bg-blue-500 text-white px-8 py-3 rounded-full text-lg hover:bg-blue-600 transition duration-300">Login</a>
+                <a href="/register" class="bg-purple-500 text-white px-8 py-3 rounded-full text-lg hover:bg-purple-600 transition duration-300">Sign Up</a>
+            {% endif %}
+        </div>
+
+        <div class="mt-8">
+            <p class="text-gray-500 dark:text-gray-400">{{ subscriberCount or '770k+' }} Subscribers on YouTube</p>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-20 bg-section-bg">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">What You Get</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="bg-green-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-4">Real-Time Trade Alerts</h3>
+                <p class="text-gray-600 dark:text-gray-400">Get instant notifications for Crypto, Forex, and US Stocks opportunities.</p>
+            </div>
+            <div class="text-center">
+                <div class="bg-green-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-4">Daily Market Analysis</h3>
+                <p class="text-gray-600 dark:text-gray-400">Professional insights and trade ideas from experienced traders.</p>
+            </div>
+            <div class="text-center">
+                <div class="bg-green-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-4">Educational Materials</h3>
+                <p class="text-gray-600 dark:text-gray-400">Learn from comprehensive guides and become an independent trader.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Track Record Section -->
+<section id="track-record" class="py-20">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Our Track Record</h2>
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div>
+                    <div class="text-3xl font-bold text-green-500 mb-2">85%</div>
+                    <div class="text-gray-600 dark:text-gray-400">Win Rate</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-green-500 mb-2">770k+</div>
+                    <div class="text-gray-600 dark:text-gray-400">YouTube Subscribers</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-green-500 mb-2">24/7</div>
+                    <div class="text-gray-600 dark:text-gray-400">Market Monitoring</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="py-20 bg-section-bg">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">What members say about us</h2>
+        <!-- Testimonials Container -->
+
+    <div class="relative testimonials-wrapper">
+      
+      <!-- Fade overlays -->
+      <div class="testimonial-fade-left absolute left-0 top-0 bottom-0"></div>
+      <div class="testimonial-fade-right absolute right-0 top-0 bottom-0"></div>      
+      <!-- Track Container -->
+      <div class="testimonials-container overflow-hidden relative">
+        <div class="testimonials-track flex gap-6" id="testimonial-track">
+          {% for testimonial in testimonials %}
+          <div class="testimonial-card flex-shrink-0 w-80 md:w-96">
+            <h3 class="text-lg font-bold mb-4 text-gray-900 dark:text-white">
+              {{ testimonial.position }}
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-6 text-sm leading-relaxed">
+              {{ testimonial.content }}
+            </p>
+            <div class="testimonial-footer">
+              <div class="testimonial-author">
+                {% if testimonial.avatar %}
+                <img src="{{ testimonial.avatar }}" alt="{{ testimonial.name }}" class="testimonial-avatar">
+                {% else %}
+                <div class="testimonial-avatar"></div>
+                {% endif %}
+                <h4 class="testimonial-author-name">{{ testimonial.name }}</h4>
+              </div>
+              <div class="testimonial-rating">
+                {% for i in range(0, testimonial.rating) %}⭐{% endfor %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="py-20 bg-section-bg">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-gray-100">
+      Frequently Asked Questions
+    </h2>
+
+    <div class="max-w-3xl mx-auto space-y-4">
+      {% set faqs = [
+        {
+          question: "What markets do you cover?",
+          answer: "We cover Crypto, Forex, and US Stocks. Our analysts monitor these markets 24/7 to provide the best trade opportunities."
+        },
+        {
+          question: "How do I receive the trade alerts?",
+          answer: "Trade alerts are sent through our private Discord community with instant notifications to your phone or desktop."
+        },
+        {
+          question: "Can I cancel my subscription anytime?",
+          answer: "Yes, you can cancel anytime directly from your account dashboard—no fees or hidden terms."
+        },
+        {
+          question: "Do you provide educational content?",
+          answer: "Yes. Members get access to tutorials, strategy breakdowns, and market insights to improve independent trading skills."
+        },
+        {
+          question: "What makes Data Trader Premium different?",
+          answer: "We provide full trade explanations, daily analysis, and transparent performance reports—focused on education and trust."
+        },
+        {
+          question: "How much should I invest to get started?",
+          answer: "There's no minimum. Start with any amount you're comfortable with and always apply sound risk management."
+        },
+        {
+          question: "Is there a money-back guarantee?",
+          answer: "We don't offer refunds for digital services, but you can cancel anytime to stop future payments."
+        }
+      ] %}
+
+      {% for item in faqs %}
+      <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+        <button class="faq-question w-full px-6 py-4 text-left font-semibold text-lg flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-200 text-gray-900 dark:text-gray-200">
+          <span class="flex-1 text-center">{{ item.question }}</span>
+          <svg class="faq-icon w-5 h-5 transform transition-transform duration-200" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+        <div class="faq-answer px-6 pb-4 hidden">
+          <p class="text-gray-600 dark:text-gray-300">{{ item.answer }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-20 bg-gradient-to-r from-green-500 to-blue-600">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold text-white mb-6">Ready to Transform Your Trading?</h2>
+        <p class="text-xl text-green-100 mb-8">Join thousands of successful traders who trust our signals</p>
+        <a href="/pricing" class="inline-block bg-white text-green-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition duration-300">Get Started Today</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+
+        question.addEventListener('click', () => {
+            // Toggle active class pada item yang diklik
+            item.classList.toggle('active');
+
+            // Tutup FAQ item lainnya (opsional)
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item && otherItem.classList.contains('active')) {
+                    otherItem.classList.remove('active');
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

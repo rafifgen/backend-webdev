@@ -1,33 +1,36 @@
-import { Module } from "@nestjs/common";
-import { UsersModule } from "./users/users.module";
-import { FilesModule } from "./files/files.module";
-import { AuthModule } from "./auth/auth.module";
-import databaseConfig from "./database/config/database.config";
-import authConfig from "./auth/config/auth.config";
-import appConfig from "./config/app.config";
-import mailConfig from "./mail/config/mail.config";
-import fileConfig from "./files/config/file.config";
-import facebookConfig from "./auth-facebook/config/facebook.config";
-import googleConfig from "./auth-google/config/google.config";
-import appleConfig from "./auth-apple/config/apple.config";
-import path from "path";
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { AuthAppleModule } from "./auth-apple/auth-apple.module";
-import { AuthFacebookModule } from "./auth-facebook/auth-facebook.module";
-import { AuthGoogleModule } from "./auth-google/auth-google.module";
-import { HeaderResolver, I18nModule } from "nestjs-i18n";
-import { TypeOrmConfigService } from "./database/typeorm-config.service";
-import { MailModule } from "./mail/mail.module";
-import { HomeModule } from "./home/home.module";
-import { DataSource, DataSourceOptions } from "typeorm";
-import { AllConfigType } from "./config/config.type";
-import { SessionModule } from "./session/session.module";
-import { MailerModule } from "./mailer/mailer.module";
-import { MongooseModule } from "@nestjs/mongoose";
-import { MongooseConfigService } from "./database/mongoose-config.service";
-import { DatabaseConfig } from "./database/config/database-config.type";
-import { TestimonialsModule } from "./testimonials/testimonials.module";
+import { Module } from '@nestjs/common';
+import { UsersModule } from './users/users.module';
+import { FilesModule } from './files/files.module';
+import { AuthModule } from './auth/auth.module';
+import databaseConfig from './database/config/database.config';
+import authConfig from './auth/config/auth.config';
+import appConfig from './config/app.config';
+import mailConfig from './mail/config/mail.config';
+import fileConfig from './files/config/file.config';
+import viewConfig from './view/config/view.config';
+import facebookConfig from './auth-facebook/config/facebook.config';
+import googleConfig from './auth-google/config/google.config';
+import appleConfig from './auth-apple/config/apple.config';
+import path from 'path';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthAppleModule } from './auth-apple/auth-apple.module';
+import { AuthFacebookModule } from './auth-facebook/auth-facebook.module';
+import { AuthGoogleModule } from './auth-google/auth-google.module';
+import { HeaderResolver, I18nModule } from 'nestjs-i18n';
+import { TypeOrmConfigService } from './database/typeorm-config.service';
+import { MailModule } from './mail/mail.module';
+import { HomeModule } from './home/home.module';
+import { DataSource, DataSourceOptions } from 'typeorm';
+import { AllConfigType } from './config/config.type';
+import { SessionModule } from './session/session.module';
+import { MailerModule } from './mailer/mailer.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseConfigService } from './database/mongoose-config.service';
+import { DatabaseConfig } from './database/config/database-config.type';
+import { WebModule } from './web/web.module';
+import { TestimonialsModule } from './testimonials/testimonials.module';
+import { AdminModule } from './admin/admin.module';
 
 // <database-block>
 const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
@@ -53,26 +56,27 @@ const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
 				appConfig,
 				mailConfig,
 				fileConfig,
+				viewConfig,
 				facebookConfig,
 				googleConfig,
 				appleConfig,
 			],
-			envFilePath: [".env"],
+			envFilePath: ['.env'],
 		}),
 		infrastructureDatabaseModule,
 		I18nModule.forRootAsync({
 			useFactory: (configService: ConfigService<AllConfigType>) => ({
-				fallbackLanguage: configService.getOrThrow("app.fallbackLanguage", {
+				fallbackLanguage: configService.getOrThrow('app.fallbackLanguage', {
 					infer: true,
 				}),
-				loaderOptions: { path: path.join(__dirname, "/i18n/"), watch: true },
+				loaderOptions: { path: path.join(__dirname, '/i18n/'), watch: true },
 			}),
 			resolvers: [
 				{
 					use: HeaderResolver,
 					useFactory: (configService: ConfigService<AllConfigType>) => {
 						return [
-							configService.get("app.headerLanguage", {
+							configService.get('app.headerLanguage', {
 								infer: true,
 							}),
 						];
@@ -93,7 +97,9 @@ const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
 		MailModule,
 		MailerModule,
 		HomeModule,
+		WebModule,
 		TestimonialsModule,
+		AdminModule,
 	],
 })
 export class AppModule {}
